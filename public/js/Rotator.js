@@ -28,18 +28,28 @@ export default class Rotator {
     }
   }
 
+  trigger(key, data) {
+    this.calls[key] = data || null;
+    if (this.events[key]) {
+      this.events[key].forEach(callback => callback(data));
+    }
+  }
+
   handleOrientation(event) {
-    console.log('handleOrientation', event);
     const key = 'rotate';
-    const data = {
+    const values = {
       alpha : event.alpha,
       beta  : event.beta,
       gamma : event.gamma
     };
 
-    this.calls[key] = data || null;
-    if (this.events[key]) {
-      this.events[key].forEach(callback => callback(data));
+    if ((this.initialValues == null) && ((values.beta !== 0) && (values.gamma !== 0))) {
+      console.log('CONDITION MET', values);
+      this.initialValues = values;
+      console.log('this.initialValues', this.initialValues);
+      this.trigger('init', values);
     }
+
+    this.trigger(key, values);
   }
 }

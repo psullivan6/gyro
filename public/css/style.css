@@ -22,7 +22,6 @@ a {
 
 section {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -44,7 +43,18 @@ section:nth-child(3) {
   background-color: #989C94;
 }
 
+section img {
+  display: block;
+  width: 150px;
+  margin-right: 12px;
+  border-radius: 6px;
+  background-color: white;
+}
+
 section .value {
+  display: block;
+  width: 2em;
   font-family: monospace;
   font-size: 18px;
+  text-align: right;
 }

@@ -2,11 +2,17 @@ extends layout
 
 block content
   section.Alpha
-    h1 Alpha
-    span.value(data-rotate-alpha) 0
+    img(src="/images/alpha.png", alt="Alpha")
+    aside
+      span.value(data-rotate-alpha-initial) 0
+      span.value(data-rotate-alpha) 0
   section.Beta
-    h1 Beta
-    span.value(data-rotate-beta) 0
+    img(src="/images/beta.png", alt="Beta")
+    aside
+      span.value(data-rotate-beta-initial) 0
+      span.value(data-rotate-beta) 0
   section.Gamma
-    h1 Gamma
-    span.value(data-rotate-gamma) 0
+    img(src="/images/gamma.png", alt="Gamma")
+    aside
+      span.value(data-rotate-gamma-initial) 0
+      span.value(data-rotate-gamma) 0
