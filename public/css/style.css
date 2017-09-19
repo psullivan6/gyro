@@ -62,9 +62,37 @@ section .value {
 }
 
 
-#adjust {
+.adjustmentButtons {
   position: fixed;
-  top: 30px;
-  right: 30px;
+  bottom: 30px;
+  left: 30px;
+}
+
+.adjustmentButtons article {
+  display: block;
   padding: 12px;
+}
+
+.adjustmentButtons span,
+.adjustmentButtons button {
+  margin-right: 6px;
+  padding: 6px;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.adjustmentButtons span {
+  display: inline-block;
+  min-width: 70px;
+}
+
+.adjustmentButtons button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 4px;
+  background-color: black;
+  color: white;
 }

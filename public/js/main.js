@@ -1,5 +1,8 @@
 import Rotator from './Rotator.js';
-import { getRadians } from './Math.js';
+import {
+  getRadians,
+  normalizeValue
+} from './Math.js';
 
 const rotator = new Rotator();
 
@@ -39,19 +42,19 @@ const getYOffset = (radians, adjacent) => {
   return Math.tan(radians) * adjacent;
 }
 
-const drawMask = (rotation) => {
-  const yValue = canvas.height / 2;
-  const yOffset = getYOffset(rotation, (canvas.height / 2));
+const drawMask = (values) => {
+  const yOffset = getYOffset(values.rotation, (canvas.height / 2));
 
   // Clear and Save
   context.clearRect(0, 0, canvas.width, canvas.height);
+  context.globalAlpha = 0.25;
   context.save(); // [NOTE] this is crucial
 
   // Clipping Mask
   context.beginPath();
   context.moveTo(0, canvas.height);                // bottom left
-  context.lineTo(0, yValue + yOffset);             // top left
-  context.lineTo(canvas.width, yValue - yOffset);  // top right
+  context.lineTo(0, values.y + yOffset);             // top left
+  context.lineTo(canvas.width, values.y - yOffset);  // top right
   context.lineTo(canvas.width, canvas.height);     // bottom right
   context.closePath();
   context.clip();
@@ -77,7 +80,12 @@ const rotate = (values) => {
   betaDOM.innerHTML = beta;
   gammaDOM.innerHTML = gamma;
 
-  drawMask(getRadians(alpha));
+  const drawValues = {
+    rotation : getRadians(alpha * -1),
+    y        : normalizeValue(beta, [45, 101], [0, canvas.height])
+  };
+
+  drawMask(drawValues);
 };
 
 rotator.on('rotate', rotate);
@@ -103,7 +111,24 @@ rotator.on('init', function(values) {
 // =============================================================================
 // context.clearRect(0, 0, canvas.width, canvas.height);
 
-const adjustment = document.getElementById('adjust');
+// const alphaAdjustment = document.getElementById('adjustAlpha');
+
+// let adjustmentValues = {
+//   alpha : 0,
+//   beta  : 0,
+//   gamma : 0
+// };
+
+// const handleAlphaAdjustment = () => {
+//   console.log('HANDLE ADJUSTMENT');
+
+//   adjustmentValues.alpha += 1;
+
+//   rotate(adjustmentValues);
+// }
+
+// alphaAdjustment.addEventListener('click', handleAlphaAdjustment);
+
 
 let adjustmentValues = {
   alpha : 0,
@@ -111,12 +136,17 @@ let adjustmentValues = {
   gamma : 0
 };
 
-const handleAdjustment = () => {
-  console.log('HANDLE ADJUSTMENT');
+const handleAdjustment = (event) => {
+  const data = event.target.dataset;
+  const rotation = data.value;
+  const value = parseInt(data.increment, 10);
 
-  adjustmentValues.alpha += 1;
-
+  adjustmentValues[rotation] += value;
   rotate(adjustmentValues);
 }
 
-adjustment.addEventListener('click', handleAdjustment);
+const adjustmentButtons = document.querySelectorAll('.adjustmentButton');
+
+for (var i = adjustmentButtons.length - 1; i >= 0; i--) {
+  adjustmentButtons[i].addEventListener('click', handleAdjustment);
+}

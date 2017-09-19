@@ -20,4 +20,16 @@ block content
   canvas#Water
     //- img(src="/images/water.jpg", alt="water")
 
-  button#adjust Adjust Rotation
+  .adjustmentButtons
+    article
+      span Alpha
+      button.adjustmentButton(data-value="alpha", data-increment=1) +
+      button.adjustmentButton(data-value="alpha", data-increment=-1) -
+    article
+      span Beta
+      button.adjustmentButton(data-value="beta", data-increment=10) +
+      button.adjustmentButton(data-value="beta", data-increment=-10) -
+    article
+      span Gamma
+      button.adjustmentButton(data-value="gamma", data-increment=1) +
+      button.adjustmentButton(data-value="gamma", data-increment=-1) -
